@@ -1,82 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Automation Publisher</title>
-  <meta name="description" content="A video content management and publishing automation platform.">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #202938;
-      line-height: 1.7;
-    }
-    header {
-      background: #172554;
-      color: white;
-      padding: 65px 20px;
-      text-align: center;
-    }
-    header h1 { font-size: 36px; margin: 0 0 12px; }
-    main {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    section {
-      background: white;
-      padding: 28px;
-      margin-bottom: 20px;
-      border-radius: 12px;
-    }
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #64748b;
-    }
-    a { color: #2563eb; }
-    footer a { margin: 0 10px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Video Automation Publisher</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+header {
+  background: #172554;
+  color: white;
+  padding: 22px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h2 { margin: 0; }
+
+.container {
+  max-width: 1050px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+  box-shadow: 0 3px 15px rgba(0,0,0,.04);
+}
+
+h1 { margin-top: 0; }
+
+label {
+  display: block;
+  font-weight: bold;
+  margin: 18px 0 8px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #dce1eb;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  border: 0;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+#preview {
+  display: none;
+  width: 100%;
+  max-height: 450px;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: black;
+}
+
+.notice {
+  background: #eff6ff;
+  padding: 15px;
+  border-radius: 8px;
+  color: #1e40af;
+  line-height: 1.6;
+}
+
+.status {
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #64748b;
+}
+
+footer a {
+  margin: 0 10px;
+  color: #2563eb;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>Video Automation Publisher</h1>
-    <p>Simplifying video content management and publishing.</p>
-  </header>
 
-  <main>
-    <section>
-      <h2>About the Platform</h2>
-      <p>
-        Video Automation Publisher is a web-based platform designed
-        to help content creators organize video content and simplify
-        their publishing workflows across supported social media
-        platforms.
-      </p>
-    </section>
+<header>
+  <h2>Video Automation Publisher</h2>
+  <span>Creator Dashboard</span>
+</header>
 
-    <section>
-      <h2>How It Works</h2>
-      <p>
-        The platform helps users manage video content and automate
-        parts of their publishing workflow. Users remain responsible
-        for their content and for authorizing any connected social
-        media accounts.
-      </p>
-    </section>
+<div class="container">
 
-    <section>
-      <h2>Contact</h2>
-      <p>For questions or support, please contact the platform owner.</p>
-    </section>
-  </main>
+  <div class="card">
+    <h1>Publish Your Videos</h1>
+    <p>
+      Manage your video content and prepare posts
+      for your connected social media accounts.
+    </p>
+  </div>
 
-  <footer>
-    <a href="terms.html">Terms of Service</a>
-    <a href="privacy.html">Privacy Policy</a>
-    <p>&copy; 2026 Video Automation Publisher</p>
-  </footer>
+  <div class="card">
+    <h2>Account Connection</h2>
+
+    <p>
+      Connect your social media account to manage
+      your publishing workflow.
+    </p>
+
+    <button disabled>
+      TikTok Integration — Setup in Progress
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>Prepare a Video</h2>
+
+    <label for="video">Select a video</label>
+    <input type="file" id="video" accept="video/mp4,video/quicktime">
+
+    <video id="preview" controls></video>
+
+    <label for="caption">Post Caption</label>
+    <textarea id="caption"
+      placeholder="Write your video caption..."></textarea>
+
+    <label for="privacy">Post Visibility</label>
+    <select id="privacy">
+      <option value="SELF_ONLY">Only Me</option>
+      <option value="PUBLIC_TO_EVERYONE">Everyone</option>
+    </select>
+
+    <label>
+      <input type="checkbox" id="rights" style="width:auto">
+      I confirm that I own this video or have permission
+      to publish it.
+    </label>
+
+    <br><br>
+
+    <button id="prepare">Prepare Draft</button>
+
+    <p class="status" id="status"></p>
+  </div>
+
+  <div class="card">
+    <h2>Publishing Workflow</h2>
+
+    <div class="notice">
+      Videos must be reviewed and authorized by the user
+      before publishing. Publishing integration is not
+      connected yet.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="terms.html">Terms of Service</a>
+  <a href="privacy.html">Privacy Policy</a>
+  <p>© 2026 Video Automation Publisher</p>
+</footer>
+
+<script>
+const videoInput = document.getElementById("video");
+const preview = document.getElementById("preview");
+const status = document.getElementById("status");
+
+let videoUrl = null;
+
+videoInput.addEventListener("change", () => {
+  const file = videoInput.files[0];
+
+  if (!file) return;
+
+  if (videoUrl) URL.revokeObjectURL(videoUrl);
+
+  videoUrl = URL.createObjectURL(file);
+  preview.src = videoUrl;
+  preview.style.display = "block";
+
+  status.textContent = "Video selected successfully.";
+});
+
+document.getElementById("prepare").addEventListener("click", () => {
+  const file = videoInput.files[0];
+  const caption = document.getElementById("caption").value;
+  const rights = document.getElementById("rights").checked;
+
+  if (!file) {
+    status.textContent = "Please select a video.";
+    return;
+  }
+
+  if (!rights) {
+    status.textContent = "Please confirm your content rights.";
+    return;
+  }
+
+  if (!caption.trim()) {
+    status.textContent = "Please enter a caption.";
+    return;
+  }
+
+  status.textContent =
+    "Draft information validated locally. Publishing integration is not connected yet.";
+});
+</script>
+
 </body>
 </html>
