@@ -1,240 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101828">
 <title>Video Automation Publisher</title>
-
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #172033;
-}
-
-header {
-  background: #172554;
-  color: white;
-  padding: 22px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-header h2 { margin: 0; }
-
-.container {
-  max-width: 1050px;
-  margin: 40px auto;
-  padding: 0 20px;
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 14px;
-  margin-bottom: 22px;
-  box-shadow: 0 3px 15px rgba(0,0,0,.04);
-}
-
-h1 { margin-top: 0; }
-
-label {
-  display: block;
-  font-weight: bold;
-  margin: 18px 0 8px;
-}
-
-input, textarea, select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #dce1eb;
-  border-radius: 8px;
-  font-size: 15px;
-}
-
-textarea {
-  min-height: 100px;
-  resize: vertical;
-}
-
-button {
-  border: 0;
-  padding: 12px 20px;
-  border-radius: 8px;
-  background: #2563eb;
-  color: white;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:disabled {
-  background: #94a3b8;
-  cursor: not-allowed;
-}
-
-#preview {
-  display: none;
-  width: 100%;
-  max-height: 450px;
-  margin-top: 20px;
-  border-radius: 10px;
-  background: black;
-}
-
-.notice {
-  background: #eff6ff;
-  padding: 15px;
-  border-radius: 8px;
-  color: #1e40af;
-  line-height: 1.6;
-}
-
-.status {
-  margin-top: 15px;
-  font-weight: bold;
-}
-
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #64748b;
-}
-
-footer a {
-  margin: 0 10px;
-  color: #2563eb;
-}
+:root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#182230;background:#f3f5f9;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}header{background:#101828;color:#fff;padding:22px max(5vw,20px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:750;font-size:18px;letter-spacing:.2px}.tag{font-size:13px;color:#cbd5e1}
+main{max-width:980px;margin:42px auto;padding:0 20px}.intro{margin-bottom:24px}.intro h1{font-size:clamp(28px,4vw,38px);margin:0 0 10px}.muted{color:#667085;line-height:1.65}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:white;border:1px solid #e6eaf0;border-radius:16px;padding:24px;box-shadow:0 8px 24px #10182808}.card h2{font-size:19px;margin:0 0 10px}
+label{display:block;font-size:14px;font-weight:650;margin:17px 0 7px}input,textarea,select{width:100%;font:inherit;padding:12px 13px;border:1px solid #d0d5dd;border-radius:9px;background:#fff;color:#182230}textarea{min-height:105px;resize:vertical}
+button,.button{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:9px;padding:12px 17px;background:#e31c5f;color:#fff;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}
+button.secondary{background:#344054}button:disabled{opacity:.5;cursor:not-allowed}.full{width:100%;margin-top:18px}
+.notice{padding:13px 15px;border-radius:10px;background:#fff4e5;color:#8a4b08;font-size:13px;line-height:1.6;margin-top:15px}
+.status{font-size:14px;line-height:1.6;margin-top:14px;overflow-wrap:anywhere}.preview{display:none;width:100%;max-height:300px;background:#111;border-radius:10px;margin-top:14px}
+.check{display:flex;align-items:flex-start;gap:9px;font-weight:500!important;line-height:1.5}.check input{width:auto;margin-top:3px}
+footer{text-align:center;padding:30px 20px;color:#667085;font-size:13px}footer a{color:#475467;margin:0 9px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}main{margin:28px auto}header{align-items:flex-start;flex-direction:column}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <h2>Video Automation Publisher</h2>
-  <span>Creator Dashboard</span>
-</header>
-
-<div class="container">
-
-  <div class="card">
-    <h1>Publish Your Videos</h1>
-    <p>
-      Manage your video content and prepare posts
-      for your connected social media accounts.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Account Connection</h2>
-
-    <p>
-      Connect your social media account to manage
-      your publishing workflow.
-    </p>
-
-    <button disabled>
-      TikTok Integration — Setup in Progress
-    </button>
-  </div>
-
-  <div class="card">
-    <h2>Prepare a Video</h2>
-
-    <label for="video">Select a video</label>
-    <input type="file" id="video" accept="video/mp4,video/quicktime">
-
-    <video id="preview" controls></video>
-
-    <label for="caption">Post Caption</label>
-    <textarea id="caption"
-      placeholder="Write your video caption..."></textarea>
-
-    <label for="privacy">Post Visibility</label>
-    <select id="privacy">
-      <option value="SELF_ONLY">Only Me</option>
-      <option value="PUBLIC_TO_EVERYONE">Everyone</option>
-    </select>
-
-    <label>
-      <input type="checkbox" id="rights" style="width:auto">
-      I confirm that I own this video or have permission
-      to publish it.
-    </label>
-
-    <br><br>
-
-    <button id="prepare">Prepare Draft</button>
-
-    <p class="status" id="status"></p>
-  </div>
-
-  <div class="card">
-    <h2>Publishing Workflow</h2>
-
-    <div class="notice">
-      Videos must be reviewed and authorized by the user
-      before publishing. Publishing integration is not
-      connected yet.
-    </div>
-  </div>
-
+<header><div class="brand">Video Automation Publisher</div><div class="tag">Creator workspace</div></header>
+<main>
+<section class="intro"><h1>Manage your video publishing</h1><p class="muted">Connect your TikTok account, prepare a video, and review the publishing details before continuing.</p></section>
+<div class="grid">
+<section class="card">
+<h2>Connect TikTok</h2>
+<p class="muted">Authorize access to your TikTok account using TikTok Login Kit.</p>
+<label for="clientKey">TikTok Client Key</label>
+<input id="clientKey" autocomplete="off" placeholder="Enter your Production client key">
+<label for="redirectUri">Registered Redirect URI</label>
+<input id="redirectUri" readonly>
+<button id="connect" class="full">Continue with TikTok</button>
+<div class="notice">This GitHub Pages site can start the OAuth authorization and receive the redirect. TikTok's authorization code must still be exchanged for tokens by a secure server; never place your Client Secret in this page or repository.</div>
+<p id="oauthStatus" class="status" role="status" aria-live="polite"></p>
+</section>
+<section class="card">
+<h2>Prepare a video</h2>
+<label for="video">Video file</label><input id="video" type="file" accept="video/mp4,video/quicktime">
+<video id="preview" class="preview" controls playsinline></video>
+<label for="caption">Caption</label><textarea id="caption" maxlength="2200" placeholder="Write a caption for your video"></textarea>
+<label for="privacy">Visibility preference</label><select id="privacy"><option value="SELF_ONLY">Only me</option><option value="PUBLIC_TO_EVERYONE">Everyone</option></select>
+<label class="check"><input type="checkbox" id="rights"><span>I confirm that I own this video or have permission to publish it.</span></label>
+<button id="prepare" class="secondary full">Validate video details</button>
+<p id="draftStatus" class="status" role="status" aria-live="polite"></p>
+</section>
 </div>
-
-<footer>
-  <a href="terms.html">Terms of Service</a>
-  <a href="privacy.html">Privacy Policy</a>
-  <p>© 2026 Video Automation Publisher</p>
-</footer>
-
+</main>
+<footer><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><p>© 2026 Video Automation Publisher</p></footer>
 <script>
-const videoInput = document.getElementById("video");
-const preview = document.getElementById("preview");
-const status = document.getElementById("status");
-
-let videoUrl = null;
-
-videoInput.addEventListener("change", () => {
-  const file = videoInput.files[0];
-
-  if (!file) return;
-
-  if (videoUrl) URL.revokeObjectURL(videoUrl);
-
-  videoUrl = URL.createObjectURL(file);
-  preview.src = videoUrl;
-  preview.style.display = "block";
-
-  status.textContent = "Video selected successfully.";
+const redirectUri = new URL("callback.html", window.location.href).href;
+document.getElementById("redirectUri").value = redirectUri;
+const oauthStatus = document.getElementById("oauthStatus");
+document.getElementById("connect").addEventListener("click", () => {
+  const clientKey = document.getElementById("clientKey").value.trim();
+  if (!clientKey) { oauthStatus.textContent = "Enter your TikTok Production Client Key first."; return; }
+  const stateBytes = new Uint8Array(24);
+  crypto.getRandomValues(stateBytes);
+  const state = Array.from(stateBytes, b => b.toString(16).padStart(2,"0")).join("");
+  sessionStorage.setItem("tiktok_oauth_state", state);
+  const params = new URLSearchParams({
+    client_key: clientKey,
+    response_type: "code",
+    scope: "user.info.basic,video.upload,video.publish",
+    redirect_uri: redirectUri,
+    state
+  });
+  window.location.assign("https://www.tiktok.com/v2/auth/authorize/?" + params.toString());
 });
-
+let videoObjectUrl;
+document.getElementById("video").addEventListener("change", event => {
+  const file = event.target.files[0];
+  const preview = document.getElementById("preview");
+  if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
+  if (!file) { preview.style.display = "none"; return; }
+  if (!["video/mp4","video/quicktime"].includes(file.type)) {
+    document.getElementById("draftStatus").textContent = "Choose an MP4 or QuickTime video.";
+    event.target.value = ""; preview.style.display = "none"; return;
+  }
+  videoObjectUrl = URL.createObjectURL(file);
+  preview.src = videoObjectUrl; preview.style.display = "block";
+  document.getElementById("draftStatus").textContent = "Video selected. Review the caption and rights confirmation.";
+});
 document.getElementById("prepare").addEventListener("click", () => {
-  const file = videoInput.files[0];
-  const caption = document.getElementById("caption").value;
+  const file = document.getElementById("video").files[0];
+  const caption = document.getElementById("caption").value.trim();
   const rights = document.getElementById("rights").checked;
-
-  if (!file) {
-    status.textContent = "Please select a video.";
-    return;
-  }
-
-  if (!rights) {
-    status.textContent = "Please confirm your content rights.";
-    return;
-  }
-
-  if (!caption.trim()) {
-    status.textContent = "Please enter a caption.";
-    return;
-  }
-
-  status.textContent =
-    "Draft information validated locally. Publishing integration is not connected yet.";
+  const out = document.getElementById("draftStatus");
+  if (!file) { out.textContent = "Select a video first."; return; }
+  if (!caption) { out.textContent = "Enter a caption first."; return; }
+  if (!rights) { out.textContent = "Confirm that you have the rights to publish this video."; return; }
+  out.textContent = "Video details validated locally. No video has been uploaded or published.";
 });
 </script>
-
 </body>
 </html>
