@@ -30,7 +30,7 @@ footer{text-align:center;padding:30px 20px;color:#667085;font-size:13px}footer a
 <h2>Connect TikTok</h2>
 <p class="muted">Authorize access to your TikTok account using TikTok Login Kit.</p>
 <label for="clientKey">TikTok Client Key</label>
-<input id="clientKey" autocomplete="off" placeholder="Enter your TikTok Production client key">
+<input id="clientKey" autocomplete="off" placeholder="Enter your TikTok Sandbox client key">
 <label for="redirectUri">Registered Redirect URI</label>
 <input id="redirectUri" readonly>
 <button id="connect" class="full">Continue with TikTok</button>
@@ -51,13 +51,13 @@ footer{text-align:center;padding:30px 20px;color:#667085;font-size:13px}footer a
 </main>
 <footer><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy Policy</a><p>© 2026 Video Automation Publisher</p></footer>
 <script>
-const redirectUri = "https://control-statistics-ensures-continent.trycloudflare.com/webhook/c7f67804-67ee-4eb7-967b-ec96e7fc661a";
+const redirectUri = "https://terrorism-wood-aud-purchasing.trycloudflare.com/webhook/c7f67804-67ee-4eb7-967b-ec96e7fc661a";
 const oauthState = "5daf535e0af3938898bd790d57938bf59fb1aaa34c243958560c00632a9c9178";
 document.getElementById("redirectUri").value = redirectUri;
 const oauthStatus = document.getElementById("oauthStatus");
 document.getElementById("connect").addEventListener("click", () => {
   const clientKey = document.getElementById("clientKey").value.trim();
-  if (!clientKey) { oauthStatus.textContent = "Enter your TikTok Production Client Key first."; return; }
+  if (!clientKey) { oauthStatus.textContent = "Enter your TikTok Sandbox Client Key first."; return; }
   const params = new URLSearchParams({
     client_key: clientKey,
     response_type: "code",
