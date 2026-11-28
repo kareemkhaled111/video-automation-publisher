@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TikTok Authorization - Video Automation Publisher"><style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f9;color:#182230;font:16px system-ui,-apple-system,"Segoe UI",sans-serif}.box{max-width:720px;margin:9vh auto;padding:28px 22px}.card{background:#fff;border:1px solid #e6eaf0;border-radius:16px;padding:26px;box-shadow:0 8px 24px #10182808}h1{margin-top:0}p{line-height:1.65;color:#475467}.notice{background:#fff4e5;color:#8a4b08;border-radius:10px;padding:14px;line-height:1.6;font-size:14px}.value{font:13px ui-monospace,monospace;overflow-wrap:anywhere;background:#f2f4f7;padding:12px;border-radius:8px;user-select:all}a{color:#175cd3}
+</style></head><body><main class="box"><section class="card"><h1>TikTok authorization response</h1><p id="result">Checking the authorization response…</p><div id="details"></div><p><a href="./">Return to the publisher</a></p></section></main>
+<script>
+const params = new URLSearchParams(location.search);
+const code = params.get("code");
+const returnedState = params.get("state");
+const error = params.get("error") || params.get("error_description");
+const expectedState = sessionStorage.getItem("tiktok_oauth_state");
+const details = document.getElementById("details");
+if (error) {
+ document.getElementById("result").textContent = "TikTok authorization was not completed.";
+ details.textContent = error;
+} else if (!code) {
+ document.getElementById("result").textContent = "No authorization code was returned. You can close this page and try again.";
+} else if (!expectedState || !returnedState || returnedState !== expectedState) {
+ document.getElementById("result").textContent = "The OAuth state check failed. For security, this response must not be used.";
+} else {
+ document.getElementById("result").textContent = "TikTok returned an authorization code and the state check passed.";
+ const warning = document.createElement("p");
+ warning.className = "notice";
+ warning.textContent = "This static GitHub Pages callback cannot securely exchange the code for access and refresh tokens. That exchange requires a server-side Client Secret. No account token has been created or stored by this page.";
+ details.appendChild(warning);
+ const label = document.createElement("p"); label.textContent = "Authorization code (temporary; do not share publicly):";
+ details.appendChild(label);
+ const value = document.createElement("div"); value.className = "value"; value.textContent = code; details.appendChild(value);
+ sessionStorage.removeItem("tiktok_oauth_state");
+}
+</script></body></html>
